@@ -58,7 +58,7 @@ The raw datasets used in the MorphoDiff paper can be downloaded from the followi
 
 For each dataset, there should be a separate csv file in the required_file/ directory that contains the perturbation id (in the first column, perturbation id must be in the same format as what is provided in the metadata.jsonl), and perturbation embedding with numerical values of the pertubration encoding provided in the following columns. Please look at sample csv files provided. 
 
-We used scGPT single-cell foundation model for encoding genetic perturbations (follow installing instruction from (https://github.com/bowang-lab/scGPT)[https://github.com/bowang-lab/scGPT]), and RDKit tool (https://github.com/rdkit/rdkit)[https://github.com/rdkit/rdkit] for encoding chemical compounds. The code for converting gene ids and SMILES representation of compounds to pertubration embedding is provided in the preprocessing/ folder.
+We used scGPT single-cell foundation model for encoding genetic perturbations (follow installation instruction from [https://github.com/bowang-lab/scGPT]), and RDKit tool [https://github.com/rdkit/rdkit] for encoding chemical compounds. The code for converting gene ids and SMILES representation of compounds to pertubration embedding is provided in the preprocessing/ folder.
 
 
 ## Image Generation
