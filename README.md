@@ -27,16 +27,6 @@ Code used for data processing, training and validaiton presented in the MorphoDi
 │   └── train_text_to_image_cell_painting.py # The modified training script of Stable Diffusion
 ``` -->
 
-## Download Dataset
-
-The raw datasets used in the MorphoDiff paper can be downloaded from the following websites.
-
-| Dataset       | Link                                                                               |
-| ------------- | ---------------------------------------------------------------------------------- |
-| RxRx1         | https://www.rxrx.ai/rxrx1                                                          |
-| BBBC021       | https://bbbc.broadinstitute.org/BBBC021                                            |
-| Rohban et al. | https://github.com/broadinstitute/cellpainting-gallery - (cpg0017-rohban-pathways) |
-
 ## Training/fine-tuning
 
 The `train.sh` script provides commands for defining parameters required for training MorphoDiff and Stable Diffusion, with description of each parameter provided. After adjusting the parameters of the training script, run the following for submitting the training job usinf Slurm.
@@ -54,6 +44,15 @@ After the training is completed for the specified number of steps, the `train.sh
 
 Data folder contents must follow the structure described in [https://huggingface.co/docs/datasets/image_dataset#imagefolder](https://huggingface.co/docs/datasets/image_dataset#imagefolder). In particular, a `metadata.jsonl` file must exist to provide the perturbation id for the images. The perturbation ids used in MorphoDiff analysis are provided in the required_file/ folder.
 
+### Download Dataset
+
+The raw datasets used in the MorphoDiff paper can be downloaded from the following websites.
+
+| Dataset       | Link                                                                               |
+| ------------- | ---------------------------------------------------------------------------------- |
+| RxRx1         | https://www.rxrx.ai/rxrx1                                                          |
+| BBBC021       | https://bbbc.broadinstitute.org/BBBC021                                            |
+| Rohban et al. | https://github.com/broadinstitute/cellpainting-gallery - (cpg0017-rohban-pathways) |
 
 ## Perturbation Encoding
 
