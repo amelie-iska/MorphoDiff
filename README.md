@@ -1,2 +1,77 @@
-# MorphoDiff
-This is the official repository of MorphoDiff, a diffusion based generative pipeline to predict high-resolution cell morphological responses under different conditions based on perturbation encoding. 
+# MorphoDiff: Cellular Morphology Painting with Diffusion Models
+
+This is the official repository of MorphoDiff, a diffusion based generative pipeline to predict high-resolution cell morphological responses under different conditions based on perturbation encoding.  MorphoDiff is capable of producing guided, high-resolution predictions of cell morphology that generalize across both chemical and genetic interventions.
+
+---
+
+## Environmental Setting
+
+The requirements.txt file provided enables installation of packages used for training MorphoDiff model:
+
+- create a virtual environment: `conda create -n morphodiff python=3.10 -y`
+- install dependences: ` pip install -r requirements.txt`
+
+<!-- ## Codebase overview
+
+Code used for data processing, training and validaiton presented in the MorphoDiff manuscript are provided in this repository. Model weights as well as the hyperparameter configuration will be provided publicly upon acceptance.
+
+```bash
+├── code
+│   ├── bash # Containing (Slurm) bash scripts for training, image generation, and testing generated images
+│   ├── cellprofiler # Containing CellProfiler pipelines used for feature extraction, and Python scripts used for feature preprocessing and analysis
+│   ├── evaluation # Containing Python scripts for image generation and distance metric calculation
+│   ├── preprocessing # Contatinig Python scripts used for data pre-processing
+│   ├── cell_cropped_benchmarking_code # Contatinig scripts used for cell-cropped image analysis 
+│   ├── required_file # Contatining files required for perturbation encoding of all datasets (perturbation encoded vectors)
+│   ├── perturbation_encoder.py # Implementation of perturbation encoding class as part of the MorphoDiff pipeline
+│   └── train_text_to_image_cell_painting.py # The modified training script of Stable Diffusion
+``` -->
+
+## Download Dataset
+
+The raw datasets used in the MorphoDiff paper can be downloaded from the following websites.
+
+| Dataset       | Link                                                                               |
+| ------------- | ---------------------------------------------------------------------------------- |
+| RxRx1         | https://www.rxrx.ai/rxrx1                                                          |
+| BBBC021       | https://bbbc.broadinstitute.org/BBBC021                                            |
+| Rohban et al. | https://github.com/broadinstitute/cellpainting-gallery - (cpg0017-rohban-pathways) |
+
+## Training/fine-tuning
+
+The `train.sh` script provides commands for defining parameters required for training MorphoDiff and Stable Diffusion, with description of each parameter provided. After adjusting the parameters of the training script, run the following for submitting the training job usinf Slurm.
+
+```bash
+sbatch code/train.sh
+```
+
+You should provide a path to a pretrained Stable Diffusion model to the script. It can either be the pretrained Stable Diffusion (such as [stable-diffusion-v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4) used for training MorphoDiff), or one of the pretrained MorphoDiff checkpoints, provided here.
+
+After the training is completed for the specified number of steps, the `train.sh` automatically resubmits the job and resumes training from the logged checkpoint. You can set the total_steps parameter to not train more than this number of steps, or comment the `scontrol requeue $SLURM_JOB_ID` line that resubmits the job once it is finished. 
+
+
+## Data Preparation
+
+Data folder contents must follow the structure described in [https://huggingface.co/docs/datasets/image_dataset#imagefolder](https://huggingface.co/docs/datasets/image_dataset#imagefolder). In particular, a `metadata.jsonl` file must exist to provide the perturbation id for the images. The perturbation ids used in MorphoDiff analysis are provided in the required_file/ folder.
+
+
+## Perturbation Encoding
+
+For each dataset, there should be a separate csv file in the required_file directory that contains the perturbation id (in the first column, perturbation id must be in the same format as what is provided in the metadata.jsonl), and perturbation embedding with numerical values of the pertubration encoding provided in the following columns. 
+
+We used scGPT single-cell foundation model for encoding genetic perturbations (follow installing instruction from (https://github.com/bowang-lab/scGPT)[https://github.com/bowang-lab/scGPT]), and RDKit tool (https://github.com/rdkit/rdkit)[https://github.com/rdkit/rdkit] for encoding chemical compounds. The code for converting gene ids and SMILES representation of compounds to pertubration embedding is provided in the preprocessing folder.
+
+
+## Image Generation
+
+The `generate_img.sh` script is a Slurm based bash script that takes the path to the pretrained checkpoint, a file of perturbation list to generate, number of images to generate perperturbation, and an address to save the images of each perturbation in a separate folder. You should set the parameters described and documented in the `generate_img.sh` and run it as follow
+
+```bash
+sh code/generate_img.sh
+```
+
+## CellProfiler Analysis
+
+The CellProfiler pipeline used for extracting CellProfiler features is provided in `code/cellprofiler/pipeline/` folder. All scripts for CellProfiler feature preprocessing, and validation are provided in the `code/cellprofiler/` folder.
+
+
