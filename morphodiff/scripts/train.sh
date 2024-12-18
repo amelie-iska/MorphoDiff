@@ -4,9 +4,8 @@
 #SBATCH --cpus-per-task=6
 #SBATCH --mem=64G
 #SBATCH --ntasks=1
-#SBATCH --partition=a40
 #SBATCH --time=4:00:00
-#SBATCH --job-name=train-MorphoDiff
+#SBATCH --job-name=train
 #SBATCH --error=out_dir/%x-%j.err
 #SBATCH --output=out_dir/%x-%j.out
 #SBATCH --requeue
@@ -20,15 +19,7 @@ scontrol requeue $SLURM_JOB_ID
 trap 'handler' SIGUSR1
 
 # activate the conda environment
-source /fs01/home/znavidi/env/cell_painting/bin/activate
-# source /h/znavidi/env/morphodiff/bin/activate
-
-# print python environment
-# python -V
-# which python
-
-# print version of numpy
-# python3 -c "import numpy; print(numpy.__version__)"
+source /home/env/morphodiff/bin/activate
 
 
 ## Fixed parameters ##
@@ -39,8 +30,7 @@ export TRAINED_STEPS=0
 export SD_TYPE="conditional"
 
 # set the path to the pretrained VAE model. Downloaded from: https://huggingface.co/CompVis/stable-diffusion-v1-4 
-# export VAE_DIR="/scratch/ssd004/scratch/znavidi/cell_painting/model/stable-diffusion-v1-4" # path to the pretrained VAE model
-export VAE_DIR="/datasets/znavidi/morphodiff/github_tmp/stable-diffusion-v1-4"
+export VAE_DIR="/stable-diffusion-v1-4"
 
 # set the path to the log directory
 export LOG_DIR="model/log/"
@@ -53,15 +43,14 @@ fi
 export EXPERIMENT="BBBC021_experiment_01_resized"
 
 # set the path to the pretrained model, which could be either pretrained Stable Diffusion, or a pretrained MorphoDiff model
-# export MODEL_NAME="/scratch/ssd004/scratch/znavidi/cell_painting/model/stable-diffusion-v1-4"
-export MODEL_NAME="/datasets/znavidi/morphodiff/github_tmp/stable-diffusion-v1-4"
+export MODEL_NAME="/stable-diffusion-v1-4"
 
 # set the path to the training data directory. Folder contents must follow the structure described in"
 # " https://huggingface.co/docs/datasets/image_dataset#imagefolder. In particular, a `metadata.jsonl` file"
 # " must exist to provide the captions for the images. Ignored if `dataset_name` is specified.
-export TRAIN_DIR="/datasets/znavidi/BBBC021/experiment_01_resized/train_imgs/"
+export TRAIN_DIR="/datasets/BBBC021/experiment_01_resized/train_imgs/"
 
-# set the path to the checkpointing log file in .csv format
+# set the path to the checkpointing log file in .csv format. Should change the MorphoDiff to SD if training unconditional Stable Diffusion 
 export CKPT_LOG_FILE="${LOG_DIR}${EXPERIMENT}_log/${EXPERIMENT}_MorphoDiff_checkpoints.csv"
 
 # set the validation prompts/perturbation ids, separated by ,
@@ -124,7 +113,7 @@ echo "Data directory: $TRAIN_DIR"
 echo "Trained steps: $TRAINED_STEPS"
 
 
-accelerate launch --mixed_precision="fp16" ./train_text_to_image_cell_painting.py \
+accelerate launch --mixed_precision="fp16" ./train.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --naive_conditional=$SD_TYPE \
   --train_data_dir=$TRAIN_DIR \

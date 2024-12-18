@@ -3,8 +3,6 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --mem=64G
 #SBATCH --time=4:00:00
-#SBATCH --partition=a40
-#SBATCH --qos=m3
 #SBATCH --job-name=gen_img
 #SBATCH --error=out_dir/%x-%j.err
 #SBATCH --output=out_dir/%x-%j.out
@@ -20,13 +18,13 @@ trap 'handler' SIGUSR1
 
 
 ## Step 0: Load the environment
-source /fs01/home/znavidi/env/cell_painting/bin/activate
+source /home/env/morphodiff/bin/activate
 
-## Define the parameters
+## Define/adjust the parameters
 EXPERIMENT="BBBC021-experiment-01-resized"
-CKPT_PATH="/datasets/znavidi/model/vector-BBBC021-experiment-01-resized-MorphoDiff/checkpoint-77500"
-VAE_PATH="/scratch/ssd004/scratch/znavidi/cell_painting/model/stable-diffusion-v1-4/"
-GEN_IMG_PATH="/datasets/znavidi/morphodiff/generated_tmp/"
+CKPT_PATH="/model/BBBC021-MorphoDiff/checkpoint-0"
+VAE_PATH="/stable-diffusion-v1-4/"
+GEN_IMG_PATH="/datasets/${EXPERIMENT}/generated_imgs/"
 NUM_GEN_IMG=500
 OOD=False
 MODEL_NAME="SD"
