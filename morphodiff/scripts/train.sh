@@ -113,7 +113,7 @@ echo "Data directory: $TRAIN_DIR"
 echo "Trained steps: $TRAINED_STEPS"
 
 
-accelerate launch --mixed_precision="fp16" ./train.py \
+accelerate launch --mixed_precision="fp16" ../train.py \
   --pretrained_model_name_or_path=$MODEL_NAME \
   --naive_conditional=$SD_TYPE \
   --train_data_dir=$TRAIN_DIR \
