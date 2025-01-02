@@ -35,10 +35,9 @@ The `scripts/train.sh` provides commands for defining parameters required for tr
 sbatch scripts/train.sh
 ```
 
-You should provide a path to a pretrained Stable Diffusion model to the script. It can either be the pretrained Stable Diffusion (such as [stable-diffusion-v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4) originally used for training MorphoDiff), or one of the pretrained MorphoDiff checkpoints (link will be provided soon).
+You should provide a path to a pretrained Stable Diffusion model to the script. It can either be the pretrained Stable Diffusion (such as [stable-diffusion-v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4) originally used for training MorphoDiff), or one of the pretrained [MorphoDiff checkpoints](https://huggingface.co/navidi/MorphoDiff_checkpoints/tree/main).
 
-After the training is completed for the specified number of steps, the `scripts/train.sh` automatically resubmits the job and resumes training from the last checkpoint. You can set the total_steps parameter to not train more than a specific number of steps, or comment the `scontrol requeue $SLURM_JOB_ID` line that resubmits the job once it is finished. 
-
+After the training is completed for the specified number of steps, the `scripts/train.sh` automatically resubmits the job and resumes training from the last checkpoint. You can set the total_steps parameter to not train more than a specific number of steps, or comment the `scontrol requeue $SLURM_JOB_ID` line that resubmits the job once it is finished.
 
 ## Data Preparation
 
@@ -56,10 +55,9 @@ The raw datasets used in the MorphoDiff paper can be downloaded from the followi
 
 ## Perturbation Encoding
 
-For each dataset, there should be a separate csv file in the required_file/ directory that contains the perturbation id (in the first column, perturbation id must be in the same format as what is provided in the metadata.jsonl), and perturbation embedding with numerical values of the pertubration encoding provided in the following columns. Please look at sample csv files provided. 
+For each dataset, there should be a separate csv file in the required_file/ directory that contains the perturbation id (in the first column, perturbation id must be in the same format as what is provided in the metadata.jsonl), and perturbation embedding with numerical values of the pertubration encoding provided in the following columns. Please look at sample csv files provided.
 
 We used scGPT single-cell foundation model for encoding genetic perturbations (follow installation instruction from https://github.com/bowang-lab/scGPT), and RDKit tool (https://github.com/rdkit/rdkit) for encoding chemical compounds. The code for converting gene ids and SMILES representation of compounds to pertubration embedding is provided in the preprocessing/ folder.
-
 
 ## Image Generation
 
@@ -72,6 +70,3 @@ sh scripts/generate_img.sh
 ## CellProfiler Analysis
 
 The CellProfiler pipeline used for extracting CellProfiler features is provided in `cellprofiler/pipeline/` folder. All scripts for CellProfiler feature preprocessing, and validation are provided in the `cellprofiler/` folder.
-
-
-
