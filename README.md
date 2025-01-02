@@ -35,7 +35,7 @@ The `scripts/train.sh` provides commands for defining parameters required for tr
 sbatch scripts/train.sh
 ```
 
-You should provide a path to a pretrained Stable Diffusion model to the script. It can either be the pretrained Stable Diffusion (such as [stable-diffusion-v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4) originally used for training MorphoDiff), or one of the pretrained [MorphoDiff checkpoints](https://huggingface.co/navidi/MorphoDiff_checkpoints/tree/main).
+You should provide a path to a pretrained Stable Diffusion model to the script. It can either be the pretrained Stable Diffusion (such as [stable-diffusion-v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4) originally used for training MorphoDiff), or one of the pretrained [checkpoints](https://huggingface.co/navidi/MorphoDiff_checkpoints/tree/main).
 
 After the training is completed for the specified number of steps, the `scripts/train.sh` automatically resubmits the job and resumes training from the last checkpoint. You can set the total_steps parameter to not train more than a specific number of steps, or comment the `scontrol requeue $SLURM_JOB_ID` line that resubmits the job once it is finished.
 
