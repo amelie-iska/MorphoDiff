@@ -8,11 +8,11 @@ Link to preprint: https://www.biorxiv.org/content/10.1101/2024.12.19.629451v1
 
 ## Environmental Setting
 
-The requirements.txt file provided enables installation of packages used for training MorphoDiff model:
 
 - create a virtual environment: `conda create -n morphodiff python=3.10 -y`
-- install dependences: ` pip install -r requirements.txt`
 
+You need to install the diffusers package inside the new environment using the following link: https://github.com/huggingface/diffusers/tree/main/examples/text_to_image. 
+The xformers and wandb (if needed) packages also needs to be installed in the morphodiff environment.
 <!-- ## Codebase overview
 
 Code used for data processing, training and validaiton presented in the MorphoDiff manuscript are provided in this repository. Model weights as well as the hyperparameter configuration will be provided publicly upon acceptance.
