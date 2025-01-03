@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import torch
 import csv
-
+import os
 
 class PerturbationEncoder:
 
@@ -11,7 +11,7 @@ class PerturbationEncoder:
         self.dataset_id = dataset_id
         self.model_type = model_type
         self.model_name = model_name
-        self.root = "required_file/"
+        self.root = os.path.dirname(os.path.abspath(__file__))+"/required_file/"
 
         if 'HUVEC' in self.dataset_id:
             self.sirna_to_gene_df = pd.read_csv(
@@ -178,7 +178,7 @@ class PerturbationEncoderInference:
         self.dataset_id = dataset_id
         self.model_type = model_type
         self.model_name = model_name
-        self.root = "required_file/"
+        self.root = os.path.dirname(os.path.abspath(__file__))+"/required_file/"
 
         if 'HUVEC' in self.dataset_id:
             self.sirna_to_gene_df = pd.read_csv(

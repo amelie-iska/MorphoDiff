@@ -18,7 +18,7 @@ scontrol requeue $SLURM_JOB_ID
 }
 trap 'handler' SIGUSR1
 
-# activate the conda environment
+# activate the environment
 source /home/env/morphodiff/bin/activate
 
 
@@ -125,7 +125,7 @@ accelerate launch --mixed_precision="fp16" ../train.py \
   --train_batch_size=32 \
   --gradient_accumulation_steps=4 \
   --gradient_checkpointing \
-  --max_train_steps=40 \
+  --max_train_steps=500 \
   --learning_rate=1e-05 \
   --lr_scheduler="constant" \
   --lr_warmup_steps=0 \
