@@ -78,16 +78,13 @@ The CellProfiler pipeline used for extracting CellProfiler features is provided 
 If our work assists your research, pls use the following to cite our work:
 
 ```bash
-@article {Navidi2024.12.19.629451,
-	author = {Navidi, Zeinab and Ma, Jun and Miglietta, Esteban A. and Liu, Le and Carpenter, Anne E. and Cimini, Beth A. and Haibe-Kains, Benjamin and Wang, Bo},
-	title = {MorphoDiff: Cellular Morphology Painting with Diffusion Models},
-	elocation-id = {2024.12.19.629451},
-	year = {2024},
-	doi = {10.1101/2024.12.19.629451},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2024/12/20/2024.12.19.629451},
-	eprint = {https://www.biorxiv.org/content/early/2024/12/20/2024.12.19.629451.full.pdf},
-	journal = {bioRxiv}
+@inproceedings{
+    navidi2025morphodiff,
+    title={MorphoDiff: Cellular Morphology Painting with Diffusion Models},
+    author={Zeinab Navidi and Jun Ma and Esteban Miglietta and Le Liu and Anne E Carpenter and Beth A Cimini and Benjamin Haibe-Kains and BO WANG},
+    booktitle={The Thirteenth International Conference on Learning Representations},
+    year={2025},
+    url={https://openreview.net/forum?id=PstM8YfhvI}
 }
 ```
 
