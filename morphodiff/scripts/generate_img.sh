@@ -22,19 +22,25 @@ source /home/env/morphodiff/bin/activate
 
 ## Define/adjust the parameters
 EXPERIMENT="BBBC021-experiment-01-resized"
+# you can download pretrained checkpoints from https://huggingface.co/navidi/MorphoDiff_checkpoints/tree/main
 CKPT_PATH="/model/BBBC021-MorphoDiff/checkpoint-0"
+# For VAE, you can set path to the downloaded stable-diffusion-v1-4, or one of the pretrained chekcpoints
 VAE_PATH="/stable-diffusion-v1-4/"
+# Set path to the directory where you want to save the generated images
 GEN_IMG_PATH="/datasets/${EXPERIMENT}/generated_imgs/"
+# Set the number of images you want to generate
 NUM_GEN_IMG=500
+# Set the out-of-distribution (OOD) status of the generated images
 OOD=False
-MODEL_NAME="SD"
+MODEL_NAME="SD" # this is fixed
 MODEL_TYPE="conditional" # set "conditional" for MorphoDiff, and "naive" for unconditional SD
 
 # this PERTURBATION_LIST_PATH should be address of a .csv file with the following columns: perturbation, ood (including header)
+# sample file can be found in morphodiff/required_file/BBBC021_experiment_pert_ood_info.csv
 PERTURBATION_LIST_PATH="${EXPERIMENT}_pert_ood_info.csv" 
 
 ## Activate the environment
-# source env/cell_painting/bin/activate
+# source /home/env/morphodiff/bin/activate
 
 ## Generate images
 python evaluation/generate_img.py \
@@ -49,9 +55,10 @@ python evaluation/generate_img.py \
 --ood $OOD # & 
 
 
-## uncomment the blow lines (and & in the last line of calling the python script) 
+## uncomment the blow lines (and the "&"" in the last line of calling the python script above) 
 ## if you want your script reallocates resources and resume generating images 
 ## for all perturbations even after the allocated time is over
+
 # wait
 # echo 'waking up'
 # echo `date`: Job $SLURM_JOB_ID is allocated resource
