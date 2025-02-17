@@ -17,8 +17,8 @@ scontrol requeue $SLURM_JOB_ID
 trap 'handler' SIGUSR1
 
 
-## Step 0: Load the environment
-source /home/env/morphodiff/bin/activate
+## Load the environment
+# source /home/env/morphodiff/bin/activate
 
 ## Define/adjust the parameters
 EXPERIMENT="BBBC021-experiment-01-resized"
@@ -39,8 +39,6 @@ MODEL_TYPE="conditional" # set "conditional" for MorphoDiff, and "naive" for unc
 # sample file can be found in morphodiff/required_file/BBBC021_experiment_pert_ood_info.csv
 PERTURBATION_LIST_PATH="${EXPERIMENT}_pert_ood_info.csv" 
 
-## Activate the environment
-# source /home/env/morphodiff/bin/activate
 
 ## Generate images
 python evaluation/generate_img.py \
