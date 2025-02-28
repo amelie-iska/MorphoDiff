@@ -20,12 +20,11 @@ trap 'handler' SIGUSR1
 ## Load the environment
 # source /home/env/morphodiff/bin/activate
 
-## Define/adjust the parameters
-EXPERIMENT="BBBC021-experiment-01-resized"
+## Define/adjust the parameters ##
+# Set the experiment name
+EXPERIMENT="BBBC021_experiment"
 # you can download pretrained checkpoints from https://huggingface.co/navidi/MorphoDiff_checkpoints/tree/main
 CKPT_PATH="/model/BBBC021-MorphoDiff/checkpoint-0"
-# For VAE, you can set path to the downloaded stable-diffusion-v1-4, or one of the pretrained chekcpoints
-VAE_PATH="/stable-diffusion-v1-4/"
 # Set path to the directory where you want to save the generated images
 GEN_IMG_PATH="/datasets/${EXPERIMENT}/generated_imgs/"
 # Set the number of images you want to generate
@@ -35,18 +34,19 @@ OOD=False
 MODEL_NAME="SD" # this is fixed
 MODEL_TYPE="conditional" # set "conditional" for MorphoDiff, and "naive" for unconditional SD
 
-# this PERTURBATION_LIST_PATH should be address of a .csv file with the following columns: perturbation, ood (including header)
-# sample file can be found in morphodiff/required_file/BBBC021_experiment_pert_ood_info.csv
-PERTURBATION_LIST_PATH="${EXPERIMENT}_pert_ood_info.csv" 
+# The PERTURBATION_LIST_PATH variable should be address of a .csv file with the following columns: perturbation, ood (including header)
+# sample file can be found in morphodiff/required_file/BBBC021_experiment_pert_ood_info.csv for the BBBC021 experiment sample, and
+# morphodiff/required_file/HUVEC_01_pert_ood_info.csv for the HUVEC experiment sample
+PERTURBATION_LIST_PATH="../required_file/${EXPERIMENT}_pert_ood_info.csv" 
 
 
 ## Generate images
-python evaluation/generate_img.py \
+python ../evaluation/generate_img.py \
 --experiment $EXPERIMENT \
 --model_checkpoint $CKPT_PATH \
 --model_name $MODEL_NAME \
 --model_type $MODEL_TYPE \
---vae_path $VAE_PATH \
+--vae_path $CKPT_PATH \
 --perturbation_list_address $PERTURBATION_LIST_PATH \
 --gen_img_path $GEN_IMG_PATH \
 --num_imgs $NUM_GEN_IMG \

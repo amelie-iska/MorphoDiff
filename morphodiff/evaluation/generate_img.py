@@ -192,8 +192,7 @@ if __name__ == '__main__':
 
     # read perturbations
     prompts = []
-    perturbation_file = '../code/required_file/' +\
-        args.perturbation_list_address
+    perturbation_file = args.perturbation_list_address
 
     prompt_df = pd.read_csv(perturbation_file)
 
