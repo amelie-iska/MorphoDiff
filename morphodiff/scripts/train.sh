@@ -18,49 +18,67 @@ scontrol requeue $SLURM_JOB_ID
 }
 trap 'handler' SIGUSR1
 
-# activate the environment
-source /home/env/morphodiff/bin/activate
+## activate the environment
+# source /home/env/morphodiff/bin/activate
+
+## load necessary modules
+# module load cuda-12.4
+# export CUDA_HOME=$(dirname $(dirname $(which nvcc)))
+# export PATH=$CUDA_HOME/bin:$PATH
+# export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+
+# Update the environment variables if needed
+# export CFLAGS='-std=c++11'
+# export CC=/usr/bin/gcc-9
+# export CXX=/usr/bin/g++-9
+
+echo $(nvcc --version)$
+echo which nvcc: $(which nvcc)
+
+# Echo the path to the Python interpreter
+echo "Using Python from: $(which python)"
+echo "CUDA is available: $(python -c 'import torch; print(torch.cuda.is_available())')"
 
 
 ## Fixed parameters ##
 export CKPT_NUMBER=0
 export TRAINED_STEPS=0
 
-# set "conditional" for training MorphoDiff, and "naive" for training Stable Diffuison
+## set "conditional" for training MorphoDiff, and "naive" for training Stable Diffuison
 export SD_TYPE="conditional"
 
-# set the path to the pretrained VAE model. Downloaded from: https://huggingface.co/CompVis/stable-diffusion-v1-4 
+## set the path to the pretrained VAE model. Downloaded from: https://huggingface.co/CompVis/stable-diffusion-v1-4 
 export VAE_DIR="/stable-diffusion-v1-4"
 
-# set the path to the log directory
+## set the path to the log directory
 export LOG_DIR="model/log/"
-# chek if LOG_DIR exists, if not create it
+## check if LOG_DIR exists, if not create it
 if [ ! -d "$LOG_DIR" ]; then
   mkdir -p $LOG_DIR
 fi
 
-# set the experiment name
-export EXPERIMENT="BBBC021_experiment_01_resized"
+## set the experiment name
+export EXPERIMENT="BBBC021"
 
-# set the path to the pretrained model, which could be either pretrained Stable Diffusion, or a pretrained MorphoDiff model
+## set the path to the pretrained model, which could be either pretrained Stable Diffusion, or a pretrained MorphoDiff model
 export MODEL_NAME="/stable-diffusion-v1-4"
 
-# set the path to the training data directory. Folder contents must follow the structure described in"
-# " https://huggingface.co/docs/datasets/image_dataset#imagefolder. In particular, a `metadata.jsonl` file"
-# " must exist to provide the captions for the images. Ignored if `dataset_name` is specified.
-export TRAIN_DIR="/datasets/BBBC021/experiment_01_resized/train_imgs/"
+## set the path to the training data directory. Folder contents must follow the structure described in"
+## " https://huggingface.co/docs/datasets/image_dataset#imagefolder. In particular, a `metadata.jsonl` file"
+## " must exist to provide the captions for the images. Ignored if `dataset_name` is specified.
+export TRAIN_DIR="/datasets/BBBC021/train_imgs/"
 
-# set the path to the checkpointing log file in .csv format. Should change the MorphoDiff to SD if training unconditional Stable Diffusion 
+## set the path to the checkpointing log file in .csv format. Should change the MorphoDiff to SD if training unconditional Stable Diffusion 
 export CKPT_LOG_FILE="${LOG_DIR}${EXPERIMENT}_log/${EXPERIMENT}_MorphoDiff_checkpoints.csv"
 
-# set the validation prompts/perturbation ids, separated by ,
+## set the validation prompts/perturbation ids, separated by ,
 export VALID_PROMPT="cytochalasin-d,docetaxel,epothilone-b"
 
-# the header for the checkpointing log file
+## the header for the checkpointing log file
 export HEADER="dataset_id,log_dir,pretrained_model_dir,checkpoint_dir,seed,trained_steps,checkpoint_number"
 mkdir -p ${LOG_DIR}${EXPERIMENT}_log
 
-# Function to get column index by header name
+## Function to get column index by header name
 get_column_index() {
     local header_line=$1
     local column_name=$2
@@ -145,9 +163,9 @@ accelerate launch --mixed_precision="fp16" ../train.py \
   --trained_steps=$TRAINED_STEPS
 
 
-# Requeue the job
-echo `date`: Job $SLURM_JOB_ID finished running
-scontrol requeue $SLURM_JOB_ID
-echo `date`: Job $SLURM_JOB_ID reallocated resource
+## uncommet below lines if want to requeue the job and resume training from previous checkpoints saved in the $CKPT_LOG_FILE
+# echo `date`: Job $SLURM_JOB_ID finished running
+# scontrol requeue $SLURM_JOB_ID
+# echo `date`: Job $SLURM_JOB_ID reallocated resource
 
 
