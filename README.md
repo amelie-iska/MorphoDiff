@@ -8,16 +8,16 @@ Link to preprint: https://www.biorxiv.org/content/10.1101/2024.12.19.629451v1
 
 ## Environmental Setting
 
-Create a virtual environment:
-
-`conda create -n morphodiff python=3.10 -y`
-
-Next, install the diffusers package inside the created environment using the following commands:
+Create a new virtual environment (python 3.10.12 was used in our environment), and install the diffusers package inside the created environment using the following commands:
 
 ```bash
-cd diffusers
+git clone git@github.com:bowang-lab/MorphoDiff.git
+
+cd MorphoDiff/morphodiff/diffusers
 
 pip install .
+
+cd examples/text_to_image
 
 pip install -r requirements.txt
 
