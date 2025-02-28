@@ -14,7 +14,7 @@ Create a new virtual environment (python 3.10.12 was used in our experiments), a
 # clone github repository
 git clone git@github.com:bowang-lab/MorphoDiff.git
 
-## install diffusers
+# install diffusers
 cd MorphoDiff/morphodiff/diffusers
 
 pip install .
