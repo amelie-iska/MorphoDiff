@@ -8,12 +8,24 @@ Link to preprint: https://www.biorxiv.org/content/10.1101/2024.12.19.629451v1
 
 ## Environmental Setting
 
-Create a virtual environment: 
+Create a virtual environment:
 
 `conda create -n morphodiff python=3.10 -y`
 
-Next, install the diffusers package inside the new environment using the following link: https://github.com/huggingface/diffusers/tree/main/examples/text_to_image. 
+Next, install the diffusers package inside the created environment using the following commands:
+
+```bash
+cd diffusers
+
+pip install .
+
+pip install -r requirements.txt
+
+accelerate config
+```
+
 The xformers and wandb (if needed) packages are also required for training and need to be installed in the morphodiff environment.
+
 <!-- ## Codebase overview
 
 Code used for data processing, training and validaiton presented in the MorphoDiff manuscript are provided in this repository. Model weights as well as the hyperparameter configuration will be provided publicly upon acceptance.
@@ -75,6 +87,7 @@ sh scripts/generate_img.sh
 The CellProfiler pipeline used for extracting CellProfiler features is provided in `cellprofiler/pipeline/` folder. All scripts for CellProfiler feature preprocessing, and validation are provided in the `cellprofiler/` folder.
 
 ## Citation
+
 If our work assists your research, pls use the following to cite our work:
 
 ```bash
@@ -87,4 +100,3 @@ If our work assists your research, pls use the following to cite our work:
     url={https://openreview.net/forum?id=PstM8YfhvI}
 }
 ```
-
