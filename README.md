@@ -8,11 +8,13 @@ Link to preprint: https://www.biorxiv.org/content/10.1101/2024.12.19.629451v1
 
 ## Environmental Setting
 
-Create a new virtual environment (python 3.10.12 was used in our environment), and install the diffusers package inside the created environment using the following commands:
+Create a new virtual environment (python 3.10.12 was used in our experiments), and install the diffusers package inside the created environment using the following commands:
 
 ```bash
+# clone github repository
 git clone git@github.com:bowang-lab/MorphoDiff.git
 
+## install diffusers
 cd MorphoDiff/morphodiff/diffusers
 
 pip install .
@@ -21,6 +23,7 @@ cd examples/text_to_image
 
 pip install -r requirements.txt
 
+# configure accelerator
 accelerate config
 ```
 
