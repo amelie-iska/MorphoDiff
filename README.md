@@ -24,7 +24,7 @@ pip install -r requirements.txt
 accelerate config
 ```
 
-The xformers and wandb (if needed) packages are also required for training and need to be installed in the morphodiff environment.
+The xformers and wandb (if needed) packages are also required for training and need to be installed in the morphodiff environment. The requirements.txt provides a list of packages and their versions used to run the scripts.
 
 <!-- ## Codebase overview
 
