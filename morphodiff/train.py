@@ -588,7 +588,7 @@ def encode_prompt(identifier):
     global dataset_id
     global naive_conditional
     encoder = PerturbationEncoder(dataset_id, naive_conditional, 'SD')
-    prompt_embeds = encoder.get_gene_embedding(identifier)
+    prompt_embeds = encoder.get_perturbation_embedding(identifier)
     # shape (bs, 77, 768)
     return prompt_embeds
 
