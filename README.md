@@ -8,7 +8,7 @@ Link to the ICLR published paper: https://openreview.net/pdf?id=PstM8YfhvI
 
 ## Environmental Setting
 
-Create a new virtual environment (python 3.10.12 was used in our experiments), and install the diffusers package inside the created environment using the following commands ([Source Link](https://github.com/huggingface/diffusers/tree/main/examples/text_to_image)):
+Create a new virtual environment (python 3.10.12 was used in our experiments), and install the diffusers package provided in this repository using the following commands:
 
 ```bash
 # clone github repository
